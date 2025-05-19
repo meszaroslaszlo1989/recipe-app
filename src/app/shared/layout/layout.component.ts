@@ -22,13 +22,16 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
-currentYear: any;
-logout() {
-throw new Error('Method not implemented.');
-}
-userId: any;
-switchMenuSize() {
-throw new Error('Method not implemented.');
-}
+  isSidenavOpen = true;
+  currentYear: any;
+  userId: any;
+
+  logout() {
+    throw new Error('Method not implemented.');
+  }
+
+  switchMenuSize() {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
 
 }
