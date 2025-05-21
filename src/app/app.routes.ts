@@ -6,6 +6,7 @@ import { RecipelistComponent } from './feature/recipe/recipelist/recipelist.comp
 import { RecipeformComponent } from './feature/recipe/recipeform/recipeform.component';
 import { RecipedetailComponent } from './feature/recipe/recipedetail/recipedetail.component';
 import { MyrecipelistComponent } from './feature/recipe/myrecipelist/myrecipelist.component';
+import { AuthGard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGard],
     children: [
       { path: 'recipes', component: RecipelistComponent },
       { path: 'recipes/my', component: MyrecipelistComponent },
