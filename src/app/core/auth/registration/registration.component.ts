@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserCredential } from 'firebase/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,11 @@ import { UserCredential } from 'firebase/auth';
 export class RegistrationComponent {
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {
     this.registerForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -36,7 +41,7 @@ export class RegistrationComponent {
       try {
         const { email, password } = this.registerForm.value;
         const userCredential: UserCredential = await this.authenticationService.signup(email, password);
-        console.log(userCredential);
+        this.router.navigate(['/login'])
       } catch (error) {
         console.log(error);
       }

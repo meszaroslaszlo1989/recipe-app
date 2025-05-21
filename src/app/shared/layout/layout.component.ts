@@ -4,8 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { AuthenticationService } from '../../core/auth/services/authentication.service';
 
 @Component({
   selector: 'app-layout',
@@ -26,8 +27,16 @@ export class LayoutComponent {
   currentYear: any;
   userId: any;
 
-  logout() {
-    throw new Error('Method not implemented.');
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+
+  async logout() {
+    try {
+      await this.authenticationService.logout();
+      this.authenticationService.removeUser();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   switchMenuSize() {

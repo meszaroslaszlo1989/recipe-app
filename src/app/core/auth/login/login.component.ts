@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserCredential } from 'firebase/auth';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,11 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -36,7 +41,8 @@ export class LoginComponent {
       try {
         const { email, password } = this.loginForm.value;
         const userCredential: UserCredential = await this.authenticationService.login(email, password);
-        console.log(userCredential);
+        this.authenticationService.setUser(userCredential);
+        this.router.navigate(['recipes'])
       } catch (error) {
         console.log(error);
       }
