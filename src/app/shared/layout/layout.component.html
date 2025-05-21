@@ -1,0 +1,34 @@
+<mat-sidenav-container class="layout-container">
+  <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen">
+    <mat-toolbar>Menü</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="recipes" routerLinkActive="active">Receptek</a>
+      <a mat-list-item routerLink="recipes/my" routerLinkActive="active">Saját receptek</a>
+      <a mat-list-item routerLink="recipe/add" routerLinkActive="active">Új recept</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Header -->
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="switchMenuSize()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="title">Receptkezelő</span>
+      <span class="toolbar-spacer"></span>
+      <span *ngIf="userId">{{userId}}</span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <!-- Content -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+     <mat-toolbar color="primary" class="footer" role="contentinfo">
+      <span class="footer-text">© {{ currentYear }} Angular App</span>
+     </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
