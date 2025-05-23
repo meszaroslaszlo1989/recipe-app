@@ -1,8 +1,5 @@
 .recipeForm-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
 mat-card {
@@ -16,4 +13,19 @@ mat-card-content {
 
 .full-width {
   width: 100%;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ingredient-field {
+  flex: 1;
+}
+
+.form-container {
+  padding-bottom: 20px;
 }

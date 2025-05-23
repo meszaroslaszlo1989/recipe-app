@@ -5,15 +5,32 @@
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Recept neve</mat-label>
-          <input matInput formControlName="title">
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Leírása</mat-label>
-          <textarea  matInput formControlName="description" type="text"></textarea>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">Recept hozzáadása</button>
+        <div class="form-container">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Recept neve</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Leírása</mat-label>
+            <textarea matInput formControlName="description" type="text"></textarea>
+          </mat-form-field>
+
+          <div formArrayName="ingredients">
+            <div *ngFor="let ingredient of ingredients.controls; let i = index" class="ingredient-row">
+              <mat-form-field appearance="fill" class="ingredient-field">
+                <input matInput [formControlName]="i" placeholder="Hozzávaló">
+              </mat-form-field>
+              <button mat-icon-button color="warn" type="button" (click)="removeIngredient(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <button mat-raised-button color="primary" type="button" (click)="addIngredient()">
+              Új hozzávaló
+            </button>
+          </div>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">Recept
+          hozzáadása</button>
       </form>
     </mat-card-content>
   </mat-card>
