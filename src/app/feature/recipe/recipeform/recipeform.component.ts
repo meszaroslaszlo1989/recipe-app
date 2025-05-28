@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { UserCredential } from 'firebase/auth';
-import { AuthenticationService } from '../../../core/auth/services/authentication.service';
 import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../services/recipe.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-recipeform',
@@ -18,7 +17,9 @@ import { RecipeService } from '../services/recipe.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './recipeform.component.html',
   styleUrl: './recipeform.component.scss'
 })
@@ -32,16 +33,31 @@ export class RecipeformComponent {
   ) {
     this.recipeForm = this.formBuilder.group({
       title: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      ingredients: this.formBuilder.array([
+          this.formBuilder.control('', Validators.required)
+        ])
     });
+  }
+
+  get ingredients(): FormArray {
+    return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  addIngredient(): void {
+    this.ingredients.push(this.formBuilder.control('', Validators.required));
+  }
+
+  removeIngredient(index: number) {
+    this.ingredients.removeAt(index);
   }
 
   async onSubmit() {
     if (this.recipeForm.valid) {
       try {
-        const { title, description, } = this.recipeForm.value;
+        const { title, description, ingredients } = this.recipeForm.value;
         const formRecipe: Recipe = {
-          title, description, ingredients: ['hozávaló1', 'hozzávaló2']
+          title, description, ingredients
         };
         await this.recipeService.addRecipe(formRecipe);
         this.router.navigate(['recipes']);
