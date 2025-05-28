@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public/dist",
+    "public": "dist/recipe-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -12,9 +12,6 @@
         "destination": "/index.html"
       }
     ]
-  },
-  "storage": {
-    "rules": "storage.rules"
   },
   "database": {
     "rules": "database.rules.json"
