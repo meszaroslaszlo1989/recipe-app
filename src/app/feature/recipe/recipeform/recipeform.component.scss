@@ -1,0 +1,30 @@
+.recipeForm-container {
+  display: flex;
+}
+
+mat-card {
+  padding: 25px;
+}
+
+mat-card-content {
+  padding: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ingredient-field {
+  flex: 1;
+}
+
+.form-container {
+  padding-bottom: 20px;
+}
